@@ -2,7 +2,7 @@
 
 A multi-user event scheduling system built with C, demonstrating core OS concepts including **concurrency, synchronization, file locking, and process management**. This project is developed as an Operating Systems lab mini-project.
 
-## 📋 Overview
+## Overview
 
 The Multi-User Event Scheduler is a **client-server application** that allows multiple users to create, manage, and schedule events concurrently. The system implements:
 
@@ -13,7 +13,7 @@ The Multi-User Event Scheduler is a **client-server application** that allows mu
 - **Authentication**: MD5-based password hashing for secure user authentication
 - **Event Persistence**: Stores events in a CSV format file for persistent data management
 
-## 🎯 Key Features
+## Key Features
 
 ### User Roles
 - **ADMIN**: Full control - can create users, add/delete any tasks, and stop the server
@@ -21,11 +21,11 @@ The Multi-User Event Scheduler is a **client-server application** that allows mu
 - **GUEST**: Read-only access - can only view tasks (no account needed)
 
 ### Core Functionality
-- ✅ **Create User/Admin** - Registration with MD5 password hashing
-- ✅ **View Tasks** - Display all scheduled tasks with details
-- ✅ **Add Tasks** - Schedule events with configurable intervals and priorities
-- ✅ **Delete Tasks** - Remove tasks (users can delete own, admins can delete any)
-- ✅ **Stop Server** - Admin-only command to gracefully shut down the server
+- Create User/Admin - Registration with MD5 password hashing
+- View Tasks - Display all scheduled tasks with details
+- Add Tasks - Schedule events with configurable intervals and priorities
+- Delete Tasks - Remove tasks (users can delete own, admins can delete any)
+- Stop Server - Admin-only command to gracefully shut down the server
 
 ### Scheduling Algorithm
 - **Priority-based Scheduling**: Tasks are sorted by priority
@@ -33,7 +33,7 @@ The Multi-User Event Scheduler is a **client-server application** that allows mu
 - **Dual-Core Simulation**: Can execute up to 2 tasks concurrently (simulating 2-core CPU)
 - **Time-based Intervals**: Supports hourly, daily, weekly, and custom intervals
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 OSLabMiniproject-Multi-User-Event-Scheduler/
@@ -62,7 +62,7 @@ OSLabMiniproject-Multi-User-Event-Scheduler/
     └── events.log               # Server event log
 ```
 
-## 🔧 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -99,7 +99,7 @@ This generates:
 - `scheduler_server` - The server executable
 - `client_app` - The client executable
 
-## 🚀 Running the Application
+## Running the Application
 
 ### Step 1: Start the Server
 
@@ -120,7 +120,7 @@ In another terminal:
 
 ### Example Usage Flow
 
-#### 1. **Create User Account**
+#### 1. Create User Account
 ```
 > 1
 Username: john
@@ -128,7 +128,7 @@ Password: pass123
 [Response] User created
 ```
 
-#### 2. **Create Admin Account**
+#### 2. Create Admin Account
 ```
 > 2
 Admin Username: admin
@@ -137,7 +137,7 @@ Admin Key: admin_key_12345
 [Response] Admin created (with correct admin key)
 ```
 
-#### 3. **Login and Add Task**
+#### 3. Login and Add Task
 ```
 > 3
 Select Role: 2 (USER)
@@ -151,43 +151,43 @@ Priority: 5
 [Response] Task added
 ```
 
-#### 4. **View All Tasks**
+#### 4. View All Tasks
 ```
 > 1 (View Tasks)
 [Response] Lists all scheduled tasks
 ```
 
-## 🔐 OS Concepts Demonstrated
+## OS Concepts Demonstrated
 
-### 1. **Concurrency & Thread Management**
+### 1. Concurrency & Thread Management
 - Multi-threaded server handles multiple clients simultaneously
 - Each client connection spawns a new thread using `pthread_create()`
 - Thread detaching with `pthread_detach()` for independent client threads
 
-### 2. **Synchronization & File Locking**
+### 2. Synchronization & File Locking
 - **File Locks**: Using `fcntl()` for advisory locking on data files
 - Prevents race conditions when multiple processes access `tasks.txt` and `users.txt`
 - Write locks (F_WRLCK) ensure atomic read-modify-write operations
 
-### 3. **Process & Signal Management**
+### 3. Process & Signal Management
 - Signal handler for graceful server shutdown (SIGINT)
 - Proper resource cleanup and file closing
 
-### 4. **Inter-Process Communication (IPC)**
+### 4. Inter-Process Communication (IPC)
 - TCP socket communication between client and server
 - Reliable message passing using TCP/IP protocol
 
-### 5. **Resource Allocation & Scheduling**
+### 5. Resource Allocation & Scheduling
 - Priority-based scheduling algorithm
 - Aging mechanism to prevent task starvation
 - Dual-core CPU simulation for concurrent task execution
 
-### 6. **Authentication & Security**
+### 6. Authentication & Security
 - MD5 password hashing (secure storage)
 - Role-based access control
 - Admin key validation
 
-## 📊 Event Structure (CSV Format)
+## Event Structure (CSV Format)
 
 Tasks are stored in `data/tasks.txt` with the following format:
 
@@ -206,12 +206,12 @@ ID,filename,interval,created_at,last_run,priority,created_by
 - `priority` - Task priority (higher = executed first)
 - `created_by` - Username of task creator
 
-## 🔄 Scheduling Algorithm
+## Scheduling Algorithm
 
 ### How It Works
 
 1. **Collection Phase**: Gather all tasks from file
-2. **Selection Phase**: Find tasks ready to execute (current_time - last_run ≥ interval)
+2. **Selection Phase**: Find tasks ready to execute (current_time - last_run >= interval)
 3. **Aging Phase**: Boost priority of waiting tasks (aging = waiting_time / 5)
 4. **Sorting Phase**: Sort ready tasks by priority (descending)
 5. **Execution Phase**: Execute up to 2 tasks concurrently
@@ -227,7 +227,7 @@ ready[i].priority += aging;
 
 This ensures no task waits indefinitely.
 
-## 🛠️ Build Options
+## Build Options
 
 ```bash
 # Build all targets
@@ -243,7 +243,7 @@ make client_app
 make clean
 ```
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 | Problem | Solution |
 |---------|----------|
@@ -254,7 +254,7 @@ make clean
 | File permission errors | Run: `chmod 755 data/` or recreate with `mkdir -p data/` |
 | No response from server | Check if server process is alive: `ps aux \| grep scheduler_server` |
 
-## 📝 File Operations
+## File Operations
 
 The server creates the following files in the `data/` directory:
 
@@ -263,7 +263,7 @@ The server creates the following files in the `data/` directory:
 - **events.log** - Server event log (CRUD operations)
 - **temp.txt** - Temporary file for safe task deletion
 
-## 🧪 Testing Scenarios
+## Testing Scenarios
 
 ### Scenario 1: Multi-User Concurrent Access
 ```bash
@@ -292,25 +292,25 @@ The server creates the following files in the `data/` directory:
 ### Scenario 3: Permission Testing
 ```bash
 1. Login as USER
-2. Try to delete another user's task → Should fail
+2. Try to delete another user's task -> Should fail
 3. Login as ADMIN
-4. Delete any user's task → Should succeed
-5. Try GUEST delete → Should fail
+4. Delete any user's task -> Should succeed
+5. Try GUEST delete -> Should fail
 ```
 
-## 🚨 Important Notes
+## Important Notes
 
-⚠️ **Admin Key**: The default admin key hash is hardcoded in `server.c`:
+WARNING: **Admin Key** - The default admin key hash is hardcoded in `server.c`:
 ```c
 #define ADMIN_KEY_HASH "5f4dcc3b5aa765d61d8327deb882cf99"
 ```
 This is the MD5 hash of "password". **Change this for production!**
 
-⚠️ **Password Storage**: Uses MD5 hashing (suitable for educational purposes only; use bcrypt/Argon2 for production)
+WARNING: **Password Storage** - Uses MD5 hashing (suitable for educational purposes only; use bcrypt/Argon2 for production)
 
-⚠️ **Data Persistence**: Data persists in `data/` directory; delete files to reset
+WARNING: **Data Persistence** - Data persists in `data/` directory; delete files to reset
 
-## 📚 References & Resources
+## References & Resources
 
 - [POSIX Threads (pthreads) Programming](https://www.gnu.org/software/libc/manual/html_node/POSIX-Threads.html)
 - [fcntl() File Locking](https://man7.org/linux/man-pages/man2/fcntl.2.html)
@@ -318,15 +318,15 @@ This is the MD5 hash of "password". **Change this for production!**
 - [OpenSSL MD5 Documentation](https://www.openssl.org/docs/man1.1.1/man3/MD5.html)
 - [Socket Programming in C](https://beej.us/guide/bgnet/)
 
-## 👨‍💻 Author
+## Author
 
 **HarshaVPolar**
 
-## 📜 License
+## License
 
 This project is provided as-is for educational purposes.
 
-## 🤝 Contributing
+## Contributing
 
 To contribute or suggest improvements:
 1. Fork the repository
@@ -335,17 +335,17 @@ To contribute or suggest improvements:
 4. Push to branch (`git push origin feature/YourFeature`)
 5. Open a Pull Request
 
-## 🎓 Learning Outcomes
+## Learning Outcomes
 
 This project demonstrates:
-- ✅ Multi-threaded server architecture
-- ✅ Inter-process communication via sockets
-- ✅ File locking and synchronization primitives
-- ✅ CPU scheduling algorithms
-- ✅ User authentication and authorization
-- ✅ Event-driven programming
-- ✅ Resource management and cleanup
-- ✅ Starvation prevention techniques
+- Multi-threaded server architecture
+- Inter-process communication via sockets
+- File locking and synchronization primitives
+- CPU scheduling algorithms
+- User authentication and authorization
+- Event-driven programming
+- Resource management and cleanup
+- Starvation prevention techniques
 
 ---
 
